@@ -1,13 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
 }
 
 html,body{
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    font-family: "Inconsolata", monospace;
 }
 
 #main{
@@ -21,12 +23,12 @@ html,body{
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    left: -100vh;
+    left: -220vh;
     top: 50%;
     transform: translate(0%, -50%) rotate(100deg);
     position: absolute;
-    width: 200vh;
-    height: 200vh;
+    width: 300vh;
+    height: 300vh;
     border: 2px solid #dadada;
 }
 
@@ -78,10 +80,9 @@ html,body{
 }
 
 .sec h4{
-    font-size: 2vw;
+    font-size: 6vw;
 }
 .sec h6{
-    padding-left: 1vw;
     font-size: 1vw;
     opacity: .5;
     font-weight: 500;
@@ -107,4 +108,72 @@ html,body{
     opacity: .08;
     background-color: #000000;
     cursor: pointer;
+}
+
+.logo{
+    width: 100%;
+}
+
+.logo h1{
+    padding: 1%;
+}
+
+.close {
+    position: absolute;
+    top: 5%;
+    right: 3.5%;
+    opacity: .4;
+    transition: opacity .2s ease-in-out;
+    height: 7%;
+    display: inline-block;
+}
+
+.close:hover{
+    opacity: 1;
+}
+
+.close svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#btn{
+    position: absolute;
+    bottom: 16%;
+    right: 7%;
+    background-color: #6f42c1;
+    width: 8vw;
+    height: 2vw;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .2s ease-in-out;
+}
+
+#btn:hover{
+    background-color: #59349c;
+}
+
+#btn a{
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+    font-family: "Inter", sans-serif;
+}
+
+
+footer {
+    position: fixed; /* instead of absolute */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 12px;
+    font-family: "Inter", sans-serif;
+    opacity: 0.5;
+    padding: 1% 2%;
+    display: flex;
+    justify-content: space-between;
+    background-color: white; /* or any background */
 }

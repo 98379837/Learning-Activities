@@ -1,44 +1,59 @@
-var active = 3;
-var mncircles = document.querySelectorAll(".mncircle");
-var sec = document.querySelectorAll(".sec");
+let activeIndex = 2; // Start at 3rd stripe (0-based index)
+const totalSteps = 5;
+const anglePerStep = 10; // You can tweak this for rotation size
+const mncircles = document.querySelectorAll(".mncircle");
+const sec = document.querySelectorAll(".sec");
 
-gsap.to(mncircles[active-1],{
-    opacity: .5
-})
+// Initial setup
+rotateToIndex(activeIndex);
 
-gsap.to(sec[active-1],{
-    opacity: 1
-})
+// === Rotate to Index ===
+function rotateToIndex(index) {
+    const rotation = (2 - index) * anglePerStep;
 
-mncircles.forEach(function(val, index){
-    val.addEventListener("click", function(){
-        gsap.to("#circle", {
-            rotate: (3-(index+1))*10,
-            ease: Expo.easeInOut,
-            duration: 1
-        })
-        greyout();
-        gsap.to(this, {
-            opacity: .5
-        })
-        gsap.to(sec[index],{
-            opacity: 1
-        })
-    })
-})
+    gsap.to("#circle", {
+        rotate: rotation,
+        ease: "power3.out", // smoother than power2 / expo
+        duration: 1.2        // longer for smoother feel
+    });
 
-function greyout(){
-    gsap.to(mncircles,{
-        opacity: .08
-    })
-
-    gsap.to(sec, {
-        opacity: .4
-    })
+    updateIndicators(index);
 }
- 
- gsap.to("#circle", {
-    rotate: 0,
-    ease: Expo.easeInOut,
-    duration: 2
-})
+
+// === Update mncircles and sec sections ===
+function updateIndicators(index) {
+    mncircles.forEach((circle, i) => {
+        gsap.to(circle, { opacity: i === index ? 0.5 : 0.08 });
+    });
+    sec.forEach((section, i) => {
+        gsap.to(section, { opacity: i === index ? 1 : 0.4 });
+    });
+}
+
+// === Handle Scroll with Looping and Debounce ===
+let scrollCooldown = false;
+
+window.addEventListener("wheel", (e) => {
+    if (scrollCooldown) return;
+
+    scrollCooldown = true;
+    setTimeout(() => scrollCooldown = false, 700); // control scroll frequency
+
+    if (e.deltaY > 0) {
+        // Scroll down
+        activeIndex = (activeIndex + 1) % totalSteps;
+    } else if (e.deltaY < 0) {
+        // Scroll up with wraparound
+        activeIndex = (activeIndex - 1 + totalSteps) % totalSteps;
+    }
+
+    rotateToIndex(activeIndex);
+});
+
+// === Handle Clicks on mncircle ===
+mncircles.forEach((val, index) => {
+    val.addEventListener("click", function () {
+        activeIndex = index;
+        rotateToIndex(activeIndex);
+    });
+});
